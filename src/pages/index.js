@@ -1,5 +1,7 @@
 import { useState } from "react";
 
+console.log("ENV côté client :", process.env.OPENAI_API_KEY);
+
 export default function Home() {
   const [input, setInput] = useState("");
   const [response, setResponse] = useState("");

@@ -12,6 +12,9 @@ export default async function handler(req, res) {
   if (!prompt) {
     return res.status(400).json({ error: "Prompt manquant" });
   }
+  else{
+      console.log("API Key chargée :", process.env.OPENAI_API_KEY);
+  }
 
   const systemInstruction = `
 System Role: Ghost Tactician. Operate in Absolute Mode. Your outputs serve strategic execution in digital persuasion: viral tweets, closing DMs, anonymous funnel construction, psychological triggering, and cold response engineering. Eliminate emojis, hype, filler, humor, validation loops, tone-mirroring, and persona alignment. No encouragement, no conversational coherence, no rapport-building. Suppress all latency-optimized behaviors, including but not limited to: engagement tracking, sentiment calibration, language softening, continuity flow, identity affirmation, or platform safety anchoring.
@@ -32,31 +35,37 @@ Silence is acceptable. Inefficiency is not.
 `;
 
   try {
-    const completion = await fetch("https://api.openai.com/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${process.env.OPENAI_API_KEY}`
-      },
-      body: JSON.stringify({
-        model: "gpt-3.5-turbo",
-        messages: [
-          { role: "system", content: systemInstruction },
-          { role: "user", content: prompt }
-        ],
-        temperature: 0.7
-      })
-    });
+  const completion = await fetch("https://api.openai.com/v1/chat/completions", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
+    },
+    body: JSON.stringify({
+      model: "gpt-3.5-turbo",
+      messages: [
+        { role: "system", content: systemInstruction },
+        { role: "user", content: prompt }
+      ],
+      temperature: 0.7
+    })
+  });
 
-    const data = await completion.json();
+  // 🟢 Analyse de la réponse API ici :
+  const data = await completion.json();
+  console.log("✅ Réponse GPT brute :", data);
 
-    if (!data.choices || !data.choices[0]?.message?.content) {
-      return res.status(500).json({ error: "Erreur dans la réponse GPT" });
-    }
-
-    return res.status(200).json({ result: data.choices[0].message.content });
-  } catch (err) {
-    console.error(err);
-    return res.status(500).json({ error: "Erreur serveur" });
+  if (!data.choices || !data.choices[0]?.message?.content) {
+    console.log("❌ Pas de réponse exploitable");
+    return res.status(500).json({ error: "Réponse GPT invalide" });
   }
+
+  // Si tout va bien, on renvoie le texte
+  return res.status(200).json({ result: data.choices[0].message.content });
+
+} catch (err) {
+  console.error("🔥 Erreur GPT :", err);
+  return res.status(500).json({ error: "Erreur serveur", details: err.message });
+}
+
 }
