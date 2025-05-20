@@ -1,12 +1,12 @@
 :root {
-  --background: #ffffff;
+  --background: #0a0a0a;
   --foreground: #171717;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
-    --foreground: #ededed;
+    --foreground: #0a0a0a;
   }
 }
 
@@ -35,8 +35,17 @@ a {
   text-decoration: none;
 }
 
+
+
+@keyframes fadeIn {
+  from { opacity: 1; }
+  to { opacity: 0.02; }
+}
+
 @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;
   }
+
+  
 }
