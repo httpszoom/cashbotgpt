@@ -86,7 +86,7 @@ const resetProject = () => {
       left: 0,
       width: "100%",
       minHeight: "100vh",
-      backgroundColor: "#000",
+      backgroundColor: "transparent",
       zIndex: 0.5,
       transition: "opacity 0.5s ease-in-out"
     }}>
