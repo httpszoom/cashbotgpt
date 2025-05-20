@@ -183,7 +183,7 @@ const resetProject = () => {
         {!projectSet && (
     <div style={{ marginBottom: "2rem" }}>
       <h2 style={{ fontSize: "1.2rem", marginBottom: "0.5rem" }}>
-        Décris ton projet une fois pour toutes :
+        Décris ton projet une fois pour toutes en 1 phrase:
       </h2>
       <textarea
         value={project}
@@ -229,7 +229,7 @@ const resetProject = () => {
                 textShadow: "0 0 6px #00FFB3, 0 0 12px #00FFB3"
               }}
             >
-              CashBot – Closing expert.
+              CashBot – Expert closing.
             </h1>
 
             <form onSubmit={handleSubmit}>
