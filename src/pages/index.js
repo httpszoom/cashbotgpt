@@ -269,35 +269,39 @@ const resetProject = () => {
               </button>
             </form>
 
-            <button
-              onClick={resetProject}
-              style={{
-                marginTop: "2rem",
-                color: "#FF4D4D",
-                backgroundColor: "transparent",
-                border: "1px dashed #FF4D4D",
-                padding: "0.5rem 1rem",
-                cursor: "pointer",
-                fontSize: "0.9rem"
-              }}
-            >
-              🧽 Réinitialiser mon projet
-            </button>
-            <button
-              onClick={() => setMessages([{ role: "system", content: SYSTEM_PROMPT }])}
-              style={{
-                marginTop: "1rem",
-                color: "#FF4D4D",
-                backgroundColor: "transparent",
-                border: "1px dashed #FF4D4D",
-                padding: "0.5rem 1rem",
-                cursor: "pointer",
-                fontSize: "0.9rem",
-                margin: "1rem"
-              }}
-            >
-              🗑️ Vider la conversation
-            </button>
+            <div style={{ marginTop: "2rem", display: "flex", flexDirection: "column", gap: "1rem" }}>
+              <button
+                onClick={() => setMessages([{ role: "system", content: SYSTEM_PROMPT }])}
+                style={{
+                  backgroundColor: "#000",
+                  color: "#FF4D4D",
+                  border: "1px dashed #FF4D4D",
+                  padding: "0.75rem 1.5rem",
+                  cursor: "pointer",
+                  fontWeight: "bold",
+                  boxShadow: "0 0 6px #FF4D4D",
+                  textShadow: "0 0 2px #FF4D4D",
+                }}
+              >
+                🗑️ Vider la conversation
+              </button>
+
+              <button
+                onClick={resetProject}
+                style={{
+                  backgroundColor: "#000",
+                  color: "#FF4D4D",
+                  border: "1px dashed #FF4D4D",
+                  padding: "0.75rem 1.5rem",
+                  cursor: "pointer",
+                  fontWeight: "bold",
+                  boxShadow: "0 0 6px #FF4D4D",
+                  textShadow: "0 0 2px #FF4D4D",
+                }}
+              >
+                🧽 Réinitialiser mon projet
+              </button>
+            </div>
           </>
         )}
 
