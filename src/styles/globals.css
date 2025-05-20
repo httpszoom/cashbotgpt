@@ -12,7 +12,7 @@
 
 html {
   min-height: 100vh;
-  background-color: #000;
+  background-color: transparent;
 }
 
 body {
@@ -51,7 +51,6 @@ a {
 @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;
+    background-color: transparent;
   }
-
-  
 }

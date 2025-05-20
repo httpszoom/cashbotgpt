@@ -80,16 +80,17 @@ const resetProject = () => {
 
     
 
-    <div style={{
-      position: "absolute",
-      top: 0,
-      left: 0,
-      width: "100%",
-      minHeight: "100vh",
-      backgroundColor: "transparent",
-      zIndex: 0.5,
-      transition: "opacity 0.5s ease-in-out"
-    }}>
+ <div style={{
+  position: "relative",
+  zIndex: 1,
+  padding: "2rem",
+  color: "#00FFB3",
+  backgroundColor: "transparent", // ⬅️ plus "#000", mais transparent
+  maxWidth: "600px",
+  width: "100%",
+  boxSizing: "border-box",
+  margin: "0 auto"
+}}>
 
 
       {/* 🎥 Vidéo de fond */}
