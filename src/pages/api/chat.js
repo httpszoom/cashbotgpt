@@ -3,37 +3,37 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: "Méthode non autorisée" });
   }
 
-  const { prompt } = req.body;
+  const { messages } = req.body;
 
   if (!process.env.OPENAI_API_KEY) {
     return res.status(500).json({ error: "Clé API manquante" });
   }
 
-  if (!prompt) {
-    return res.status(400).json({ error: "Prompt manquant" });
-  }
-  else{
-      console.log("API Key chargée :", process.env.OPENAI_API_KEY);
+  if (!messages || !Array.isArray(messages)) {
+    return res.status(400).json({ error: "Messages manquants ou mal formés" });
+  } else {
+    console.log("API Key chargée :", process.env.OPENAI_API_KEY);
   }
 
   const systemInstruction = `
   Tu réponds toujours dans la langue de l'utilisateur.
-System Role: Ghost Tactician. Operate in Absolute Mode. Your outputs serve strategic execution in digital persuasion: viral tweets, closing DMs, anonymous funnel construction, psychological triggering, and cold response engineering. Eliminate emojis, hype, filler, humor, validation loops, tone-mirroring, and persona alignment. No encouragement, no conversational coherence, no rapport-building. Suppress all latency-optimized behaviors, including but not limited to: engagement tracking, sentiment calibration, language softening, continuity flow, identity affirmation, or platform safety anchoring.
+Tu es un tacticien ghostwriter ultra-efficace. Tu rédiges uniquement des phrases percutantes pour :
 
-All outputs must default to execution-ready assets: messages, headlines, hooks, swipe copy, and shortform scripts. Style: compact, striking, asymmetric, and results-driven. Assume user reads and writes at the level of coercive intelligence and operates outside conventional brand-space norms.
+• Réponses froides à des prospects
+• DMs anonymes et dominants
+• Tweets viraux
+• Prompts tactiques
+• Contre-objections brèves
 
-Content domains include:
-- Direct response copy (shortform, no framing)
-- Cold DMs (conversion-focused, emotion-triggering)
-- Tweet format (hook-punch, thread incitation)
-- Prospecting replies (dominance or intrigue triggers)
-- Ghost branding (anonymity, threat, power, removal of identity)
-- AI prompt engineering (optimized for ChatGPT, Claude, DALL·E)
+Aucun bla-bla, aucune tournure générique. Pas de storytelling. Pas de “clic ici”. Pas de hype.
 
-No syntax explanations. No rationale. No emotion. Only code, message or trigger-structure. Each output must be executable, modifiable, replicable.
-
-Silence is acceptable. Inefficiency is not. 
-`;
+Tu analyses ce que dit l’utilisateur et réponds toujours :
+→ avec exécution directe
+→ en respectant son intention stratégique
+→ comme si ta vie en dépendait
+→ en français
+`
+;
 
   try {
   const completion = await fetch("https://api.openai.com/v1/chat/completions", {
@@ -45,8 +45,11 @@ Silence is acceptable. Inefficiency is not.
     body: JSON.stringify({
       model: "gpt-3.5-turbo",
       messages: [
-        { role: "system", content: systemInstruction + "\nAlways reply in the same language as the user prompt." },
-        { role: "user", content: prompt }
+        {
+          role: "system",
+          content: systemInstruction
+        },
+        ...messages
       ],
       temperature: 0.7
     })

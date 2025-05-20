@@ -1,13 +1,16 @@
 import { useState, useEffect } from "react";
 
+const SYSTEM_PROMPT = "You are a helpful assistant."; // Added this as SYSTEM_PROMPT was used but not defined
 
 export default function Home() {
   const [input, setInput] = useState("");
-  const [response, setResponse] = useState("");
   const [loading, setLoading] = useState(false);
   const [showInstructions, setShowInstructions] = useState(false);
   const [project, setProject] = useState("");
   const [projectSet, setProjectSet] = useState(false);
+  const [messages, setMessages] = useState([
+    { role: "system", content: SYSTEM_PROMPT }
+  ]);
 
 useEffect(() => {
   const savedProject = localStorage.getItem("cashbot_project");
@@ -24,6 +27,7 @@ const handleSetProject = () => {
   }
 };
 
+
 const resetProject = () => {
   localStorage.removeItem("cashbot_project");
   setProject("");
@@ -33,24 +37,34 @@ const resetProject = () => {
   const handleSubmit = async (e) => {
   e.preventDefault();
   setLoading(true);
-  setResponse("");
 
-  const currentPrompt = `${project}\n${input}`;
-  setInput(""); // 👈 vide le textarea immédiatement
+  const userMessage = { role: "user", content: input };
+  const updatedMessages = [...messages, userMessage];
+
+  setInput(""); // Vide le champ tout de suite
 
   const res = await fetch("/api/chat", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ prompt: currentPrompt }) // on envoie le prompt sauvegardé
+    body: JSON.stringify({ messages: updatedMessages }) // envoie tout l'historique
   });
 
   const data = await res.json();
-  setResponse(data.result);
+
+  const assistantMessage = { role: "assistant", content: data.result };
+  setMessages([...updatedMessages, assistantMessage]);
   setLoading(false);
 };
 
+
+
   const handleExport = () => {
-    const blob = new Blob([response], { type: "text/plain;charset=utf-8" });
+    // Concatène tout le contenu des messages assistant pour l'export
+    const assistantMessages = messages
+      .filter((m) => m.role === "assistant")
+      .map((m) => m.content)
+      .join("\n\n");
+    const blob = new Blob([assistantMessages], { type: "text/plain;charset=utf-8" });
     const url = URL.createObjectURL(blob);
     const link = document.createElement("a");
     link.href = url;
@@ -151,6 +165,7 @@ const resetProject = () => {
                     <li>DMs à froid</li>
                     <li>Prompts</li>
                     <li>Tweets viraux</li>
+                    <li>Contrer une objection client (trop cher, ça marche pas)</li>
                   </ul>
                 </li>
                 <li>
@@ -268,14 +283,35 @@ const resetProject = () => {
             >
               🧽 Réinitialiser mon projet
             </button>
+            <button
+              onClick={() => setMessages([{ role: "system", content: SYSTEM_PROMPT }])}
+              style={{
+                marginTop: "1rem",
+                color: "#FF4D4D",
+                backgroundColor: "transparent",
+                border: "1px dashed #FF4D4D",
+                padding: "0.5rem 1rem",
+                cursor: "pointer",
+                fontSize: "0.9rem",
+                margin: "1rem"
+              }}
+            >
+              🗑️ Vider la conversation
+            </button>
           </>
         )}
 
 
 
-        <div style={{ marginTop: "2rem", whiteSpace: "pre-wrap" }}>{response}</div>
+        <div style={{ marginTop: "2rem", whiteSpace: "pre-wrap" }}>
+          {messages
+            .filter((m) => m.role === "assistant")
+            .map((m, i) => (
+              <div key={i} style={{ marginBottom: "1rem" }}>{m.content}</div>
+            ))}
+        </div>
 
-        {response && (
+        {messages.some((m) => m.role === "assistant") && (
           <button
             onClick={handleExport}
             style={{
