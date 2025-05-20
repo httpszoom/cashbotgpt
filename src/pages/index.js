@@ -80,17 +80,16 @@ const resetProject = () => {
 
     
 
- <div style={{
-  position: "relative",
-  zIndex: 1,
-  padding: "2rem",
-  color: "#00FFB3",
-  backgroundColor: "transparent", // ⬅️ plus "#000", mais transparent
-  maxWidth: "600px",
-  width: "100%",
-  boxSizing: "border-box",
-  margin: "0 auto"
-}}>
+    <div style={{
+      position: "absolute",
+      top: 0,
+      left: 0,
+      width: "100%",
+      height: "100%",
+      backgroundColor: "#000",
+      zIndex: 0.5,
+      transition: "opacity 0.5s ease-in-out"
+    }}>
 
 
       {/* 🎥 Vidéo de fond */}
@@ -118,17 +117,7 @@ const resetProject = () => {
 
 
       {/* 🧠 Contenu par-dessus */}
-      <div style={{
-        position: "relative",
-        zIndex: 1,
-        padding: "2rem",
-        color: "#00FFB3",
-        backgroundColor: "#000",
-        maxWidth: "600px",
-        width: "100%",
-        boxSizing: "border-box",
-        margin: "0 auto"
-      }}>
+      <div style={{ position: "relative", zIndex: 1, padding: "2rem", color: "#00FFB3", maxWidth: "600px", margin: "0 auto" }}>
 
         <div style={{ marginBottom: "1rem", width: "100%" }}>
           <button
@@ -194,7 +183,7 @@ const resetProject = () => {
         {!projectSet && (
     <div style={{ marginBottom: "2rem" }}>
       <h2 style={{ fontSize: "1.2rem", marginBottom: "0.5rem" }}>
-        Décris ton projet une fois pour toutes en 1 phrase:
+        Décris ton projet une fois pour toutes en une phrase:
       </h2>
       <textarea
         value={project}
@@ -240,7 +229,7 @@ const resetProject = () => {
                 textShadow: "0 0 6px #00FFB3, 0 0 12px #00FFB3"
               }}
             >
-              CashBot – Expert closing.
+              CashBot – Closing expert.
             </h1>
 
             <form onSubmit={handleSubmit}>
