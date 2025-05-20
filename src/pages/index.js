@@ -122,6 +122,7 @@ const resetProject = () => {
         zIndex: 1,
         padding: "2rem",
         color: "#00FFB3",
+        backgroundColor: "#000",
         maxWidth: "600px",
         width: "100%",
         boxSizing: "border-box",

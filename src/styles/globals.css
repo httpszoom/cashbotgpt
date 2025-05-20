@@ -1,18 +1,18 @@
 :root {
-  --background: #0a0a0a;
-  --foreground: #0a0a0a;
+  --background: #000;
+  --foreground: #000;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #0a0a0a;
+    --background: #000;
+    --foreground: #000;
   }
 }
 
 html {
   min-height: 100vh;
-  background-color: #0a0a0a;
+  background-color: #000;
 }
 
 body {
