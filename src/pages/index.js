@@ -85,7 +85,7 @@ const resetProject = () => {
       top: 0,
       left: 0,
       width: "100%",
-      height: "100%",
+      minHeight: "100vh",
       backgroundColor: "#000",
       zIndex: 0.5,
       transition: "opacity 0.5s ease-in-out"
@@ -117,7 +117,16 @@ const resetProject = () => {
 
 
       {/* 🧠 Contenu par-dessus */}
-      <div style={{ position: "relative", zIndex: 1, padding: "2rem", color: "#00FFB3", maxWidth: "600px", margin: "0 auto" }}>
+      <div style={{
+        position: "relative",
+        zIndex: 1,
+        padding: "2rem",
+        color: "#00FFB3",
+        maxWidth: "600px",
+        width: "100%",
+        boxSizing: "border-box",
+        margin: "0 auto"
+      }}>
 
         <div style={{ marginBottom: "1rem", width: "100%" }}>
           <button
