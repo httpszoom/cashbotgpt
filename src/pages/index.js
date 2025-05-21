@@ -334,6 +334,12 @@ const resetProject = () => {
           </button>
         )}
       </div>
+    <style jsx global>{`
+      @keyframes fadeIn {
+        from { opacity: 1; }
+        to { opacity: 0; }
+      }
+    `}</style>
     </div>
   );
 }
